@@ -362,7 +362,7 @@ phase can become non-global.""",
         if new_instr is not None and new_instr not in included_instr:
             included_instr.add(new_instr)
     elif instr_name == "gate":
-        defined_gates.add(instr.split()[1])
+        defined_gates.add(instr.split()[1].split("(")[0])
         g_string = instr.split("{")[0] + "{\n"
         g_instructions = filter(
             lambda i: not re.fullmatch(r"\s*", i),
@@ -397,7 +397,7 @@ phase can become non-global.""",
     elif instr_name == "opaque":
         raise NotImplementedError("opaque exports not handled yet")
     else:
-        gate = instr.split()[0]
+        gate = instr.split()[0].split("(")[0]
         if gate == "ctrl":
             gate = instr.split()[2]
         if gate not in defined_gates:
